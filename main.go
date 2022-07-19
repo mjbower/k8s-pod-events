@@ -79,20 +79,7 @@ func main() {
 		UpdateFunc: onUpdate, //
 		DeleteFunc: onDelete,
 
-		// UpdateFunc: func(interface{}, interface{}) { fmt.Println("update not implemented") },
-		// DeleteFunc: func(interface{}) { fmt.Println("delete not implemented") },
 	})
-
-	// find pods in one ns, or find pods from --all-namespaces
-	// lister := podInformer.Lister().Pods("test-ns")
-
-	// pods, err := lister.List(labels.Everything())
-
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// fmt.Println("pods:", pods)
 
 	<-stopper
 }
@@ -106,8 +93,6 @@ func onAdd(obj interface{}) {
 
 	json := createJson("add",mObj.Name,mObj.Namespace,pStatus)
 	_ = json	// SEND WEBSOCKET
-
-	//fmt.Printf("Pod added %s\n",mObj.Name)
 }
 
 func onUpdate(oldObj interface{},newObj interface{}) {
@@ -153,7 +138,6 @@ func onDelete(obj interface{}) {
 
 	json := createJson("delete",mObj.Name,mObj.Namespace,"deleted")
 	_ = json	// SEND WEBSOCKET
-	//fmt.Printf("Pod Deleted Name(%s) Namespace(%s)\n",mObj.Name,mObj.Namespace)
 }
 
 var (
