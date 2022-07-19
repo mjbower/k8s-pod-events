@@ -17,20 +17,12 @@ import (
 	"k8s.io/client-go/util/homedir"
 )
 
-type oldPod struct {
-	Name      string `json:"name"`
-	Namespace string `json:"namespace"`
-	Status    string `json:"status"`
-}
-
 type Pod struct {
 	Action    string `json:"action"`
 	Name      string `json:"name"`
 	Namespace string `json:"namespace"`
 	Status    string `json:"status"`
 }
-
-var podList = make(map[Pod]string)
 
 func main() {
 
@@ -75,10 +67,9 @@ func main() {
 	}
 
 	informer.AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc: onAdd,  // register add eventhandler
-		UpdateFunc: onUpdate, //
-		DeleteFunc: onDelete,
-
+		AddFunc: onAdd,  		// register add Handler
+		UpdateFunc: onUpdate, 	// register update Handler
+		DeleteFunc: onDelete,	// register delete Handler
 	})
 
 	<-stopper
